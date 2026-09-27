@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Please cite the accompanying paper when using GWIPG in research."
+message: "Please cite the accompanying NeurIPS 2026 paper when using GWIPG in research."
 type: software
 title: "GWIPG: Inexact Projected Gradient for Gromov-Wasserstein Transport"
 version: 0.1.0
@@ -8,7 +8,7 @@ license: MIT
 authors:
   - name: "GWIPG contributors"
 preferred-citation:
-  type: unpublished
+  type: conference-paper
   title: "A Provably Convergent and Practical Algorithm for Gromov-Wasserstein Optimal Transport"
   authors:
     - family-names: Liang
@@ -16,3 +16,5 @@ preferred-citation:
     - family-names: Yang
       given-names: Lei
   year: 2026
+  collection-title: "Advances in Neural Information Processing Systems"
+  notes: "Accepted at NeurIPS 2026."

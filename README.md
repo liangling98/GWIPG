@@ -4,9 +4,9 @@
 
 This Python package implements the dense iPG solver and Euclidean transport
 projection from *A Provably Convergent and Practical Algorithm for
-Gromov-Wasserstein Optimal Transport* by Ling Liang and Lei Yang. It includes
-the paper's graph alignment, paired single-cell alignment, sphere benchmarks,
-and projection diagnostics.
+Gromov-Wasserstein Optimal Transport* by Ling Liang and Lei Yang, accepted at
+**NeurIPS 2026**. It includes the paper's graph alignment, paired single-cell
+alignment, sphere benchmarks, and projection diagnostics.
 
 ## Installation
 
@@ -184,11 +184,27 @@ guidelines. Package metadata follows the
 [Python Packaging User Guide](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/).
 See the [validation record](docs/validation.md) for executed checks and their scope.
 
-## Citation and license
+## Citation
 
-Please cite the accompanying paper when using this implementation. Author
-and title metadata are provided in [CITATION.cff](CITATION.cff); add the final
-publication DOI when available.
+If you use GWIPG in your research, please cite our **NeurIPS 2026** paper:
+
+> Ling Liang and Lei Yang. **A Provably Convergent and Practical Algorithm for
+> Gromov-Wasserstein Optimal Transport.** Accepted at NeurIPS 2026
+> (*Advances in Neural Information Processing Systems*).
+
+```bibtex
+@inproceedings{liang2026gwipg,
+  title     = {A Provably Convergent and Practical Algorithm for {Gromov--Wasserstein} Optimal Transport},
+  author    = {Liang, Ling and Yang, Lei},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year      = {2026},
+  note      = {Accepted at NeurIPS 2026}
+}
+```
+
+The same paper citation is recorded in [CITATION.cff](CITATION.cff).
+
+## License
 
 Code is released under the [MIT license](LICENSE), copyright 2026 GWIPG
 contributors. Third-party datasets retain their own terms; see [NOTICE.md](NOTICE.md).
