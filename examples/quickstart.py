@@ -15,16 +15,22 @@ def main():
     T, info = gwipg(
         C1,
         C2,
-        max_iter=100,
+        max_iter=10_000,
+        max_iter_proj=5_000,
         iter_check=5,
         tol=1e-6,
+        lr_const=1.0,
         adaptive_step=False,
         proj_lr_const=1.0,
+        projection_failure="raise",
         track_proj_iters=True,
     )
+    assert info["converged"], info["status"]
+    assert info["all_projections_converged"]
     print(f"Coupling: {T.shape}; loss: {info['gw_dist']:.6f}")
     print(f"Marginal residual: {info['feasibility']:.3e}; status: {info['status']}")
     print(f"Inner residual failures: {info['projection_criterion_failures']}")
+    return T, info
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import runpy
 
 import numpy as np
 import pytest
@@ -15,6 +16,27 @@ from gwipg.benchmarks.graph_alignment import (
 )
 from gwipg.benchmarks.snare_seq import download_snare_data, scot_application_metrics
 from gwipg.benchmarks.spheres import exact_sphere_distance
+
+
+@pytest.mark.parametrize("source", ["readme", "script"])
+def test_quickstart_converges(source):
+    root = Path(__file__).resolve().parents[1]
+    if source == "readme":
+        section = (root / "README.md").read_text().split("## Quick start", 1)[1]
+        code = section.split("```python\n", 1)[1].split("```", 1)[0]
+        namespace = {}
+        exec(compile(code, "README.md quick start", "exec"), namespace)
+        T, info = namespace["T"], namespace["info"]
+    else:
+        namespace = runpy.run_path(str(root / "examples/quickstart.py"))
+        T, info = namespace["main"]()
+    assert info["status"] == "converged"
+    assert info["all_projections_converged"]
+    assert info["projection_criterion_failures"] == 0
+    assert info["final_err"] <= 1e-6
+    assert info["final_projection_residual"] <= info["final_projection_threshold"]
+    np.testing.assert_allclose(T.sum(axis=1), 1 / 12, atol=1e-7, rtol=0)
+    np.testing.assert_allclose(T.sum(axis=0), 1 / 15, atol=1e-7, rtol=0)
 
 
 def test_vectorized_noise_retains_original_seed_sequence():

@@ -25,8 +25,9 @@ def test_packaging_preserves_legacy_solver_trajectory(name):
         track_proj_iters=True,
         projection_failure="ignore",
     )
-    # Different BLAS/dependency versions change near-threshold inner stopping.
-    np.testing.assert_allclose(T, data["plan"], atol=1e-8, rtol=1e-7)
+    # Near-threshold inner stopping differs across BLAS/dependency versions;
+    # Windows and Linux/Python 3.10 CI observed coupling differences below 2e-8.
+    np.testing.assert_allclose(T, data["plan"], atol=5e-8, rtol=1e-7)
     assert info["gw_dist"] == pytest.approx(float(data["loss"]), abs=1e-8, rel=1e-7)
     # Allow BLAS-level differences in near-threshold inner stopping counts.
     assert len(info["proj_iters"]) == len(data["proj_iters"])

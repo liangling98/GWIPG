@@ -1,15 +1,16 @@
 # Release validation
 
 Local checks for version 0.1.0 were performed on macOS arm64 with Python
-3.12.9 on 2026-09-26. This records what was actually checked; the GitHub
-Actions matrix is configured but has not yet run on a remote repository.
+3.12.9 on 2026-09-26. This records what was actually checked. Subsequent
+cross-platform runs are available in the repository's
+[GitHub Actions history](https://github.com/liangling98/GWIPG/actions).
 
 ## Installation and tests
 
 | Environment | NumPy | SciPy | POT | Result |
 | --- | --- | --- | --- | --- |
-| Local reproduction environment | 2.2.4 | 1.15.3 | 0.9.6 | 49 tests passed |
-| Fresh virtual environment, installed wheel | 2.5.3 | 1.18.1 | 0.9.7.post1 | 49 tests passed |
+| Local reproduction environment | 2.2.4 | 1.15.3 | 0.9.6 | 51 tests passed |
+| Fresh virtual environment, installed wheel | 2.5.3 | 1.18.1 | 0.9.7.post1 | 51 tests passed |
 
 The fresh environment also used pandas 3.0.6, scikit-learn 1.9.1, NetworkX
 3.7, and Matplotlib 3.11.2. A core-only wheel installation imported and solved
@@ -21,6 +22,18 @@ analytic projections, nonuniform marginals and non-unit mass, symmetric and
 asymmetric GW regressions, degenerate steps, input validation, and reporting of
 unsatisfied projection criteria. CLI and output tests cover benchmark wiring,
 offline/cache behavior, metrics, and archived-result checksums.
+
+The README and script quick starts now have explicit convergence tests.
+With a 10,000-step outer budget, tolerance 1e-6, constant Lipschitz steps,
+and `projection_failure="raise"`, the seeded 12-by-15 example reaches
+`status="converged"` with every projection passing its residual test. The
+local reproduction run used 5,241 outer steps and returned marginal residual
+3.53e-9. The earlier 100-step budget stopped too soon.
+
+The initial Windows and Linux/Python 3.10 CI runs exposed sub-2e-8 variations
+in the approximate symmetric regression coupling. Its portable absolute
+comparison tolerance is now 5e-8; the objective tolerance and frozen baseline
+values are unchanged. See `tests/fixtures/README.md`.
 
 ## Examples and archived results
 

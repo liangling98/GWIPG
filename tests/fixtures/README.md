@@ -20,8 +20,10 @@ points is unnecessary for running the tests.
 The symmetric fixture avoids equally spaced points, whose reflection
 symmetry allows floating-point roundoff to select different equivalent
 couplings. A larger inner budget reduces near-threshold variations between
-numerical-library versions. The coupling check uses absolute tolerance 1e-8
+numerical-library versions. The coupling check uses absolute tolerance 5e-8
 and relative tolerance 1e-7; exact inner stopping counts are not required
-across environments. Original-versus-packaged comparisons in the same
+across environments. Windows and Linux/Python 3.10 CI observed differences
+below 2e-8 in the symmetric coupling; the loss check retains its absolute
+tolerance of 1e-8. Original-versus-packaged comparisons in the same
 environment also verified exact agreement before these cross-environment
 tolerances were selected.

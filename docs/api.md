@@ -17,7 +17,9 @@ T, info = gwipg(C1, C2, p, q, log=True, verbose=False)
 T = gwipg(C1, C2, p, q, log=False)
 ```
 
-`help(gwipg)` lists all parameters. Existing paper parameter names are retained:
+`help(gwipg)` lists all parameters. The README's
+[complete option table](../README.md#solver-options) includes every argument,
+accepted value, and default. Existing paper parameter names are retained:
 
 | Parameter | Default | Meaning |
 | --- | --- | --- |

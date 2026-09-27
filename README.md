@@ -38,10 +38,30 @@ C1 /= C1.max()
 C2 /= C2.max()
 
 # Uniform marginals are supplied automatically.
-T, info = gwipg(C1, C2, max_iter=100, iter_check=5,
-                adaptive_step=False, proj_lr_const=1.0)
+T, info = gwipg(
+    C1,
+    C2,
+    max_iter=10_000,
+    max_iter_proj=5_000,
+    tol=1e-6,
+    iter_check=5,
+    lr_const=1.0,
+    adaptive_step=False,
+    proj_lr_const=1.0,
+    projection_failure="raise",
+    track_proj_iters=True,
+)
+assert info["converged"], info["status"]
+assert info["all_projections_converged"]
 print(T.shape, info['gw_dist'], info['feasibility'], info['status'])
 ```
+
+This seeded example reports `status="converged"` with every projection
+passing its residual check. It took 5,241 outer iterations in the local
+validation run, with loss approximately 0.0307164 and marginal residual
+approximately 3.53e-9; counts and final digits can vary across environments.
+The 10,000-iteration budget gives it room to reach the explicit outer
+tolerance of 1e-6. The assertions also run in `examples/quickstart.py`.
 
 `T` is a nonnegative transport matrix of shape `(12, 15)`. `gw_dist` is the
 full squared-loss GW score. The solver supports rectangular couplings,
@@ -60,6 +80,56 @@ gwipg-paper all --quick
 The last command runs small versions of all six paper examples. SNARE-seq
 data are downloaded and cached on first use. `--offline` requires a populated
 cache. Quick runs test the pipelines, not convergence or paper accuracy.
+
+## Solver options
+
+The following table lists **every argument to `gwipg`**, including defaults
+and accepted values. Here, `m` and `n` are the source and target sizes.
+
+| Argument | Type / accepted values | Default | Meaning |
+| --- | --- | --- | --- |
+| `C1` | Finite real array, shape `(m, m)` | Required | Source cost or dissimilarity matrix. |
+| `C2` | Finite real array, shape `(n, n)` | Required | Target cost or dissimilarity matrix. It may have a different size from `C1`. |
+| `p` | Nonnegative vector of length `m`, or `None` | `None` | Source marginal. `None` gives uniform masses `1/m`. |
+| `q` | Nonnegative vector of length `n`, or `None` | `None` | Target marginal. `None` gives uniform masses `1/n`. Both marginals must have the same positive finite total mass. |
+| `G0` | Finite nonnegative array, shape `(m, n)`, or `None` | `None` | Initial coupling. `None` uses `outer(p, q) / p.sum()`. A supplied coupling need not be exactly feasible. |
+| `max_iter` | Positive integer | `10000` | Maximum number of outer GW iterations. Increase this if the returned status is `max_iter`. |
+| `max_iter_proj` | Positive integer | `5000` | Maximum inner iterations for each Euclidean projection. Increase this when inner residual checks fail. |
+| `tol` | Nonnegative finite float | `1e-9` | Outer stopping tolerance: the **absolute** Frobenius norm of the change in the coupling must be at most this value. |
+| `iter_check` | Positive integer | `100` | Check the outer stopping condition and record progress at zero-based iterations `0, iter_check, 2*iter_check, ...`. |
+| `verbose` | Boolean | `False` | Print the iteration, change in the coupling, loss, inner count, and step size at outer check points. |
+| `log` | Boolean | `True` | Return `(T, info)` when true; return only `T` when false. |
+| `expon` | Positive finite float | `2.1` | Decay exponent in the inner tolerance schedule `epsilon_k = proj_tol_scale / (k+1)**expon`. |
+| `lr_const` | Positive finite float | `1.0` | Multiplier for the initial outer step `lr_const / L`, where `L` is defined below. |
+| `proj_tol_scale` | Positive finite float | `1.0` | Numerator of the inner tolerance schedule. Smaller values demand more accurate projections. |
+| `proj_lr_const` | Positive finite float | `2.0` | Multiplier for the dual projection step `proj_lr_const / (m+n)`. The default is a practical setting; use `1.0` for the usual inner Lipschitz step. |
+| `track_proj_iters` | Boolean | `False` | Include per-projection iteration counts, their mean/maximum, and budget-hit statistics in `info`. Requires `log=True` to retrieve them. |
+| `track_timing` | Boolean | `False` | Measure total solver, gradient, projection, and remaining time; include component times and fractions in `info` when `log=True`. |
+| `symmetric` | `None`, `True`, or `False` | `None` | `None` detects symmetry of both costs; `True` requires symmetric costs; `False` uses the general asymmetric-cost gradient. |
+| `adaptive_step` | Boolean; keyword-only | `True` | Enable the original heuristic secant-step updates. `False` keeps the outer step constant, as in the quick start. |
+| `projection_failure` | `"warn"`, `"raise"`, or `"ignore"`; keyword-only | `"warn"` | On an unsatisfied inner residual check, warn once at the end, raise immediately, or continue quietly. Failure counts remain available with `log=True`. |
+
+`L = 4 * norm(C1, 2) * norm(C2, 2)`, using matrix spectral norms. If `L=0`,
+the implementation uses a finite outer step of 1.0. The conservative outer
+choice is `lr_const=1.0, adaptive_step=False`. The adaptive heuristic retains
+the paper implementation's lagged-gradient timing and skips degenerate
+updates; its larger steps are empirical choices.
+
+For the inner projection, `k` starts at zero. Its stopping condition compares
+the Euclidean norm of the concatenated row/column marginal residuals with
+`epsilon_k / (6 + norm(y, 2))`, where `y` contains the dual potentials.
+The reported `info["feasibility"]` instead sums the two marginal residual
+norms. Increasing `expon` or decreasing `proj_tol_scale` tightens the inner
+targets and may require a larger `max_iter_proj`.
+
+With `log=True`, inspect `info["status"]`: `"converged"` means both the outer
+and final inner stopping checks passed; `"max_iter"` means the outer budget
+was exhausted without passing its check; `"inexact_projection"` means the
+outer check passed but the final inner check failed. Also inspect
+`info["all_projections_converged"]` to check every inner solve. These flags
+describe the stopping tests and do not certify a global GW optimum. See the
+[API guide](docs/api.md) for all returned diagnostics and the standalone
+`proj_transport_polytope` interface.
 
 ## Paper examples
 
