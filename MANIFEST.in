@@ -1,0 +1,8 @@
+include README.md LICENSE NOTICE.md CITATION.cff CONTRIBUTING.md .gitignore .gitattributes
+include eg_pot_random.png data/snare_seq/README.md
+recursive-include .github *.yml
+recursive-include figures *.pdf
+recursive-include docs *.md *.txt
+recursive-include examples *.py *.ipynb
+recursive-include tests *.py *.npz *.md
+recursive-include paper_results *.csv *.json *.txt *.md

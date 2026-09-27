@@ -1,0 +1,4 @@
+* text=auto eol=lf
+# Preserve archived bytes so the checksum manifest also works on Windows.
+paper_results/** -text
+*.csv whitespace=cr-at-eol

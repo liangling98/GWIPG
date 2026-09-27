@@ -1,0 +1,42 @@
+[
+  {
+    "file": "snare_seq/snare_seq_raw.csv",
+    "original_path": "results/snare_seq/tol_2p5e-4_all_solvers_5seeds/snare_seq_raw.csv",
+    "sha256": "73e2b59332cf60aaa683a8acd7873a8a3fc421e754b4e705873f766b7681ba1b"
+  },
+  {
+    "file": "snare_seq/snare_seq_summary.csv",
+    "original_path": "results/snare_seq/tol_2p5e-4_all_solvers_5seeds/snare_seq_summary.csv",
+    "sha256": "be54b2bde9b94a2e7cddc7ab4654cd3ac0119fbc90b7d007d4612acc588c0e90"
+  },
+  {
+    "file": "spheres/gw_sphere_raw.csv",
+    "original_path": "results/gw_sphere/ipg_scaling_5seeds/gw_sphere_raw.csv",
+    "sha256": "41e1cffc3f67918ea5293e05ea587ad31e2667eabd5bab84891501f8d64c5f85"
+  },
+  {
+    "file": "spheres/gw_sphere_summary.csv",
+    "original_path": "results/gw_sphere/ipg_scaling_5seeds/gw_sphere_summary.csv",
+    "sha256": "94f7e50e64c7c8dcbdecfaee086a514cd4585e7549e5b3525dda5592ef6c8149"
+  },
+  {
+    "file": "projection_cost/graph_alignment_ipg_raw.csv",
+    "original_path": "results/graph_alignment_ipg_breakdown/graph_alignment_ipg_raw.csv",
+    "sha256": "a250d95b58ba7f3fe74bc2fbf94fb81e3c44cfea8e33f8718d9c3d72f69fc074"
+  },
+  {
+    "file": "projection_cost/graph_alignment_ipg_summary.csv",
+    "original_path": "results/graph_alignment_ipg_breakdown/graph_alignment_ipg_summary.csv",
+    "sha256": "aa0e33703afa00f221f60e01a8ebf42eae29ad0112e00d4a6755266084929950"
+  },
+  {
+    "file": "inner_accuracy/exponent_sweep.csv",
+    "original_path": "results/snare_seq/ipg_inner_accuracy_n250/exponent_sweep.csv",
+    "sha256": "255a9b1f9ebd65b6a7b93658eeeae9776993f0d0940b2e63e3376f9448cc2dd6"
+  },
+  {
+    "file": "graph_alignment/results.txt",
+    "original_path": "results.txt",
+    "sha256": "3395d32a187c524390f70fa284162b2cfb48be1280a63b93730081aaead4eb77"
+  }
+]

@@ -1,0 +1,9 @@
+# Versions available for the local reproducibility checks (Python 3.12).
+# Not a lockfile for every original archived run or for every Python version.
+numpy==2.2.4
+scipy==1.15.3
+POT==0.9.6
+pandas==2.3.0
+matplotlib==3.10.1
+scikit-learn==1.7.0
+networkx==3.5

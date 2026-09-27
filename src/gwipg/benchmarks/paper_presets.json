@@ -1,0 +1,142 @@
+{
+  "gaussian": {
+    "module": "gaussian",
+    "description": "Illustrative Gaussian coupling comparison (Figure 1)",
+    "args": [],
+    "quick": [
+      "--smoke-test"
+    ]
+  },
+  "graph": {
+    "module": "graph_alignment",
+    "description": "Synthetic graph alignment (Figure 2 and appendix tables)",
+    "args": [
+      "--sizes",
+      "100",
+      "200",
+      "300",
+      "400",
+      "500",
+      "--n-seeds",
+      "20",
+      "--max-iter",
+      "5000",
+      "--ipg-expon",
+      "3"
+    ],
+    "quick": [
+      "--smoke-test"
+    ]
+  },
+  "snare": {
+    "module": "snare_seq",
+    "description": "Paired SNARE-seq comparison, full parameter sweep",
+    "args": [
+      "--sizes",
+      "250,500,1047",
+      "--seeds",
+      "0,1,2,3,4",
+      "--tol",
+      "2.5e-4",
+      "--ipg-expon",
+      "2.1",
+      "--ipg-max-iter-proj",
+      "500",
+      "--ipg-proj-tol-scale",
+      "0.05",
+      "--ipg-proj-lr-const",
+      "1.5",
+      "--ipg-iter-check",
+      "5",
+      "--bapg-epsilons",
+      "0.1,1",
+      "--ipg-track-proj-iters",
+      "--ipg-track-timing"
+    ],
+    "quick": [
+      "--smoke-test"
+    ]
+  },
+  "projection-cost": {
+    "module": "projection_cost",
+    "description": "Graph projection iteration counts and timing breakdown",
+    "args": [],
+    "quick": [
+      "--sizes",
+      "20",
+      "--n-seeds",
+      "1",
+      "--max-iter",
+      "3",
+      "--max-iter-proj",
+      "50"
+    ]
+  },
+  "inner-accuracy": {
+    "module": "inner_accuracy",
+    "description": "Fixed 250-cell inner-tolerance exponent ablation",
+    "args": [
+      "--size",
+      "250",
+      "--seed",
+      "0",
+      "--outer-tols",
+      "1e-4",
+      "--exponents",
+      "1.1,2.1,3.1,4.1",
+      "--proj-max-iters",
+      "500",
+      "--proj-tol-scales",
+      "1",
+      "--proj-lr-consts",
+      "1.5",
+      "--iter-checks",
+      "5",
+      "--outer-lr-scales",
+      "10"
+    ],
+    "quick": [
+      "--size",
+      "40",
+      "--max-iter",
+      "3",
+      "--exponents",
+      "1.1,2.1",
+      "--proj-max-iters",
+      "50",
+      "--proj-lr-consts",
+      "1.5"
+    ]
+  },
+  "spheres": {
+    "module": "spheres",
+    "description": "All nine sphere configurations with five independent samples",
+    "args": [
+      "--methods",
+      "iPG",
+      "--pairs",
+      "1-2,1-3,2-3",
+      "--sizes",
+      "50,100,200",
+      "--seeds",
+      "0,1,2,3,4",
+      "--ipg-expon",
+      "2.1",
+      "--ipg-proj-tol-scale",
+      "0.05",
+      "--ipg-proj-lr-const",
+      "1.5",
+      "--ipg-max-iter-proj",
+      "500",
+      "--ipg-iter-check",
+      "5",
+      "--ipg-tol",
+      "1e-4",
+      "--ipg-track-proj-iters",
+      "--ipg-track-timing"
+    ],
+    "quick": [
+      "--smoke-test"
+    ]
+  }
+}
