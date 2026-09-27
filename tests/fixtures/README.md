@@ -20,10 +20,14 @@ points is unnecessary for running the tests.
 The symmetric fixture avoids equally spaced points, whose reflection
 symmetry allows floating-point roundoff to select different equivalent
 couplings. A larger inner budget reduces near-threshold variations between
-numerical-library versions. The coupling check uses absolute tolerance 5e-8
-and relative tolerance 1e-7; exact inner stopping counts are not required
-across environments. Windows and Linux/Python 3.10 CI observed differences
-below 2e-8 in the symmetric coupling; the loss check retains its absolute
-tolerance of 1e-8. Original-versus-packaged comparisons in the same
+numerical-library versions. These capped, adaptive solves return approximate
+couplings, so the comparison requires absolute primal accuracy 1e-6, checks
+both marginals at 1e-6, and separately compares support above 1e-5. The smallest
+substantial fixture entry is about 0.016, well above those thresholds. Exact
+inner stopping counts are not required across environments. Windows and
+Linux/Python 3.10 CI exposed variations up to 6.2e-8 in the symmetric coupling;
+the loss check retains its absolute tolerance of 1e-8. The tolerances specify
+the numerical accuracy of this regression, not bitwise agreement across BLAS
+versions. Original-versus-packaged comparisons in the same
 environment also verified exact agreement before these cross-environment
 tolerances were selected.
